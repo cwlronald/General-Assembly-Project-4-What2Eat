@@ -4,4 +4,4 @@ Todo:
 - option to set a place as favorite
 - option to track number of times place is visited
 
-![Alt text](public/project_screenshot.PNG?raw=true "Title")
+![Alt text](client/public/project_screenshot.PNG?raw=true "Title")
