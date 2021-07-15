@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.postgres.fields import ArrayField
+# from restaurants.models import *
 import uuid
 
 # Create your models here.
@@ -11,4 +11,7 @@ class User(AbstractUser):
         editable=False,
         default=uuid.uuid4
     )
-    achievements=ArrayField()
+
+
+
+    

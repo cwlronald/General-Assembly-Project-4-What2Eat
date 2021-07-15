@@ -32,7 +32,4 @@ code {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-#mainPageSearch{
-  background-color: #BB371A;
-  border-color: #BB371A;
-}
+

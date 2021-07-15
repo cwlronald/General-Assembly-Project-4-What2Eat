@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState} from 'react'
 import {GoogleMap, useLoadScript, Marker} from '@react-google-maps/api'
 import {Form, Row, Col, Button} from "react-bootstrap";
 import usePlacesAutocomplete, {getGeocode, getLatLng,} from "use-places-autocomplete";
@@ -6,15 +6,18 @@ import {Combobox, ComboboxInput, ComboboxPopover, ComboboxOption,} from "@reach/
 import MapStyles from "./MapStyles";
 import "@reach/combobox/styles.css";
 import axios from "axios";
+import Axios from '../../Axios'
 
 
 
 
-function Maps(){
+function Maps({user}){
     let coord
     const [test,setTest]=useState({})
     const [restaurant,setRestaurant]=useState('')
     const [targetMarker,setTargetMarker]=useState({})
+    const [isFavorite, setIsFavorite]=useState(false)
+    const [visits, setVisits]=useState(0)
 
 
     const libraries=["places"]
@@ -31,7 +34,7 @@ function Maps(){
         disableDefaultUI:true,
     }
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyAbE5oW_KVEDundMDGXDUe94Fz5xwqqf0s',
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries,
     })
 
@@ -46,12 +49,11 @@ function Maps(){
 
     navigator.geolocation.getCurrentPosition((position)=>{
         coord={'lat':position.coords.latitude,'lng':position.coords.longitude}
-        console.log(position)
-        console.log(coord)
     },()=>null)
 
     if (loadError) return 'Error Loading Maps'
     if (!isLoaded) return 'Loading Maps'
+
 
     async function searchFood(e){
         e.preventDefault()
@@ -61,29 +63,29 @@ function Maps(){
 
             let locationTemp
             if (coord){
-                console.log(1)
                 locationTemp = coord
                 setTest(coord)
-                console.log(locationTemp)
             } else {
-                console.log(2)
                 locationTemp=test
-
             }
 
+            let userid
+            if (user){
+                userid=user.id
+            } else {
+                userid=''
+            }
 
             if (locationTemp){
-                let result = await axios.post('http://127.0.0.1:8000/api/',{
+                let {data} = await axios.post('http://localhost:8000/api/',{
                     location:locationTemp,
                     genre:genreTemp,
-                    price:priceTemp
+                    price:priceTemp,
+                    user_id:userid,
                 })
-                console.log(result)
-
-                let data = result.data
-                data = data.filter(e=>(e.price_level<=priceTemp.length))
-                data = data[Math.floor(Math.random()*data.length)]
                 setRestaurant(data)
+                setIsFavorite(data.favorite)
+                setVisits(data.visits)
 
                 let targetCoordinates = data.geometry.location
                 setTargetMarker(targetCoordinates)
@@ -91,8 +93,69 @@ function Maps(){
 
                 window.location.href=("#mainPageSearch")
 
-            } else {window.alert('Please enter the correct inputs!')}}catch(e){console.log(e)}
+            } else {window.alert('Please enter the correct inputs!')}
+
+
+        }catch(e){
+            panTo(targetMarker)
+            console.log(e)
+            window.alert('No restaurants found! Please change some inputs!')
+        }
     }
+
+    async function addToFavorites(e){
+        try{
+            await Axios.post(`http://localhost:8000/api/set_restaurant_favorite/`,
+                {
+                    'restaurant_id':restaurant.place_id,
+                    'user_id':user.id,
+                    'restaurant_details':{
+                        'place_id':restaurant.place_id,
+                        'name':restaurant.name,
+                        'lat':restaurant.geometry.location.lat,
+                        'lng':restaurant.geometry.location.lng,
+                        'vicitiny':restaurant.vicinity
+                    }
+                })
+            setIsFavorite(!isFavorite)
+            panTo(targetMarker)
+        }catch(e){console.log(e)}
+    }
+
+    async function addToVisitCounter(e){
+        try{
+            let num
+            let url
+            if (e==='add'){
+                url = `http://localhost:8000/api/visit_restaurant/`
+                num = 1
+            } else {
+                url = `http://localhost:8000/api/reduce_visit_restaurant/`
+                if (visits===0){
+                    num=0
+                }else{
+                    num =-1
+                }
+            }
+            await Axios.post(url,
+                {
+                    'restaurant_id':restaurant.place_id,
+                    'user_id':user.id,
+                    'restaurant_details':{
+                        'place_id':restaurant.place_id,
+                        'name':restaurant.name,
+                        'lat':restaurant.geometry.location.lat,
+                        'lng':restaurant.geometry.location.lng,
+                        'vicitiny':restaurant.vicinity
+                    }
+                })
+            setVisits(visits+num)
+            panTo(targetMarker)
+        }catch(e){console.log(e)}
+    }
+
+
+
 
     function Search(){
 
@@ -138,17 +201,16 @@ function Maps(){
                     <Row className='justify-content-center text-center'><h5>Too busy to think about lunch? Is indecisive your middle name? Let W2E decide for you lah.</h5></Row>
                     <Row className='justify-content-center text-center' style={{'fontSize':'10px'}}>Searches are limited to a 500m radius because you're probably too lazy to walk anyway</Row>
                     <Row>
-                        <Col>
+                        <Col className="col-12">
                             <Form onSubmit={searchFood}>
-                                <Row className='m-3'>
+                                <Row className='mb-3 mt-3'>
                                     <Col>
                                         <Search></Search>
                                     </Col>
                                 </Row>
-                                <Row className='mr-3 ml-3'>
+                                <Row>
                                     <Col className='col-12 col-sm-12 col-md-6 col-lg-6 mb-3'>
-                                        <Form.Control placeholder='Cuisine: Surprise Me!' className='mainPageInput'>
-                                        </Form.Control>
+                                        <Form.Control placeholder='Cuisine: Surprise Me!' className='mainPageInput'></Form.Control>
                                     </Col>
                                     <Col className='col-12 col-sm-12 col-md-6 col-lg-6'>
                                         <Form.Control as='select' className='mainPageInput'>
@@ -160,9 +222,9 @@ function Maps(){
                                         </Form.Control>
                                     </Col>
                                 </Row>
-                                <Row className='m-3 text-center' >
-                                    <Col >
-                                        <Button type='submit' id='mainPageSearch'>
+                                <Row className=' mt-3 text-center' >
+                                    <Col className='col-12'>
+                                        <Button type='submit' variant='danger' id='mainPageSearch' style={{'width':'100%'}}>
                                             {restaurant? 'Something Else!':'Feed Me Now!'}
                                         </Button>
                                     </Col>
@@ -174,13 +236,39 @@ function Maps(){
             </Row>
             {restaurant?
                 <>
-                    <Row className='justify-content-center text-center ml-2 mr-2'>
-                        <div>
-                            <h5>Here you go friend, something to eat so you wouldn't starve.</h5>
+                    <Row className='justify-content-center text-center'>
+                        <Col className='col-10 col-md-8'>
+                            <h5 className='mt-3'>Here you go friend, something to eat so you wouldn't starve.</h5>
                             <h3>{restaurant.name}</h3>
-                            <h4>{restaurant.vicinity}</h4>
-                            <h4>{restaurant.rating? `Rating: ${restaurant.rating}/5`:'No Rating'}</h4>
-                        </div>
+                            <h5>{restaurant.vicinity}</h5>
+                            <h5>{restaurant.rating? `Rating: ${restaurant.rating}/5`:'No Rating'}</h5>
+                            {user?
+                                <>
+                                    <h5>Visits: {visits}</h5>
+                                    <div>
+                                        <Row className='mt-2 text-center' >
+                                            <Col className='col-12'>
+                                                {isFavorite?
+                                                    <Button variant="success" onClick={addToFavorites} style={{'width':'100%'}}>Favorite Place</Button>
+                                                    :
+                                                    <Button variant="warning" onClick={addToFavorites} style={{'width':'100%'}}>Add to favorites</Button>
+                                                }
+                                            </Col>
+                                        </Row>
+                                        <Row className='mt-2  text-center' >
+                                            <Col>
+                                                <Button variant="warning" onClick={()=>addToVisitCounter('add')} style={{'width':'100%'}}>Log Visit</Button>
+                                            </Col>
+                                        </Row>
+                                    <Row className='mt-2  text-center' >
+                                        <Col>
+                                            <Button variant="warning" onClick={()=>addToVisitCounter('minus')} style={{'width':'100%'}}>Remove Visit</Button>
+                                        </Col>
+                                    </Row>
+                                    </div>
+                                </>
+                            :<></>}
+                        </Col>
                     </Row>
                     <Row className='m-3'>
                         <GoogleMap

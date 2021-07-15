@@ -14,6 +14,10 @@ psycopg2-binary = "*"
 requests = "*"
 googlemaps = "*"
 django-cors-headers = "*"
+django-dotenv = "*"
+gunicorn = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 

@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from datetime import timedelta
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,8 +27,9 @@ SECRET_KEY = 'django-insecure-tv*m^hfjhhafboxl2d4amh+33+1l(koc3tcs1ypl7t(9=1i7eh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'accounts.User'
 
 # Application definition
 
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'restaurants',
+    'accounts'
 ]
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
@@ -53,7 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'project_4.urls'
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'project_4.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "client/build")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,20 +90,51 @@ REST_FRAMEWORK = {
 
 
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': "settings.SECRET_KEY",
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
  'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project_4',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': 5432
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'project_4_2',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'password',
+        # 'HOST': 'localhost',
+        # 'PORT': 5432
     }
 }
 
+DATABASES['default'] = dj_database_url.config(default='postgres://cxuthvrellilzl:a6d86630a85d2552c4e78e6d92274819d43102408c710789bd52706017bcfd0e@ec2-3-226-134-153.compute-1.amazonaws.com:5432/d50f2ip0bsv76s')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -138,7 +173,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+  
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static')),
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
