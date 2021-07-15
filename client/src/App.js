@@ -21,7 +21,7 @@ function App() {
     useEffect(() => {
         async function user() {
             try {
-                let {data} = await Axios.get(`http://localhost:8000/accounts/user/`,)
+                let {data} = await Axios.get(`/accounts/user/`,)
                 setUser(data.user_profile)
                 setUserRestaurants(data.user_stats)
             } catch (e) {

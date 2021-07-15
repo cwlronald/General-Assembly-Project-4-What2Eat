@@ -17,9 +17,9 @@ function Signup({setAuth}){
     async function submitRegister(e){
         e.preventDefault()
         try{
-            await axios.post('http://localhost:8000/accounts/register/', formData,)
+            await axios.post('/accounts/register/', formData,)
             window.alert('Registration successful!')
-            let {data}=await Axios.post('http://localhost:8000/accounts/login/', formData)
+            let {data}=await Axios.post('/accounts/login/', formData)
             localStorage.setItem("access", data.access)
             localStorage.setItem("refresh", data.refresh)
             setAuth(true)

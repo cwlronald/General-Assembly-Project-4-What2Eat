@@ -77,7 +77,7 @@ function Maps({user}){
             }
 
             if (locationTemp){
-                let {data} = await axios.post('http://localhost:8000/api/',{
+                let {data} = await axios.post('/api/',{
                     location:locationTemp,
                     genre:genreTemp,
                     price:priceTemp,
@@ -105,7 +105,7 @@ function Maps({user}){
 
     async function addToFavorites(e){
         try{
-            await Axios.post(`http://localhost:8000/api/set_restaurant_favorite/`,
+            await Axios.post(`/set_restaurant_favorite/`,
                 {
                     'restaurant_id':restaurant.place_id,
                     'user_id':user.id,
@@ -127,10 +127,10 @@ function Maps({user}){
             let num
             let url
             if (e==='add'){
-                url = `http://localhost:8000/api/visit_restaurant/`
+                url = `/api/visit_restaurant/`
                 num = 1
             } else {
-                url = `http://localhost:8000/api/reduce_visit_restaurant/`
+                url = `/api/reduce_visit_restaurant/`
                 if (visits===0){
                     num=0
                 }else{

@@ -15,7 +15,7 @@ function Login({setAuth}){
     async function submitLogin(e){
         e.preventDefault()
         try{
-            let {data}=await Axios.post('http://localhost:8000/accounts/login/', formData)
+            let {data}=await Axios.post('/accounts/login/', formData)
             localStorage.setItem("access", data.access)
             localStorage.setItem("refresh", data.refresh)
             setAuth(true)
