@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, Nav, Navbar,} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
+import logo from './maps/icon.png'
 
 
 
@@ -18,7 +19,7 @@ function NavigationBar({user,setUser,setAuth}){
     return(
         <Navbar style={{'background-color':'#97a97c'}} expand="md">
             <Container>
-                <Navbar.Brand href="/">What2Eat?</Navbar.Brand>
+                <Navbar.Brand href={logo}>What2Eat?</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                     <Nav className="me-auto" >

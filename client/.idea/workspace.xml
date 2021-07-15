@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45effb6b-0c4f-4f6b-b2b9-9149258f8697" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/build/asset-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/asset-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/js/main.af359578.chunk.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/static/js/main.af359578.chunk.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Maps/Maps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Maps/Maps.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

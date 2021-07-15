@@ -106,7 +106,7 @@ function Maps({user}){
 
     async function addToFavorites(e){
         try{
-            await Axios.post(`/set_restaurant_favorite/`,
+            await Axios.post(`api/set_restaurant_favorite/`,
                 {
                     'restaurant_id':restaurant.place_id,
                     'user_id':user.id,
