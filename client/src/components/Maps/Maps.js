@@ -7,6 +7,7 @@ import MapStyles from "./MapStyles";
 import "@reach/combobox/styles.css";
 import axios from "axios";
 import Axios from '../../Axios'
+import logo from './icon.png'
 
 
 
@@ -195,7 +196,7 @@ function Maps({user}){
             <Row className='justify-content-center'>
                 <Col className='col-10 col-md-8'>
                     <Row className='justify-content-center'>
-                        <img src="img/icon.png" width='30' height='35' className="mt-2 mr-1"/>
+                        <img src={logo} width='30' height='35' className="mt-2 mr-1"/>
                         <h1>What2Eat?</h1>
                     </Row>
                     <Row className='justify-content-center text-center'><h5>Too busy to think about lunch? Is indecisive your middle name? Let W2E decide for you lah.</h5></Row>
@@ -282,7 +283,7 @@ function Maps({user}){
                                 <Marker
                                     position={{lat:targetMarker.lat,lng:targetMarker.lng}}
                                     icon={{
-                                        url:'img/icon.png',
+                                        url:{logo},
                                         scaledSize: new window.google.maps.Size(30,30),
                                         origin: new window.google.maps.Point(0,0)
                                     }}
