@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container, Nav, Navbar,} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
-import logo from './maps/icon.png'
+import logo from './maps/icon.png';
 
 
 
