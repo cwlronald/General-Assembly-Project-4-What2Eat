@@ -9,11 +9,6 @@ import axios from "axios";
 import Axios from '../../Axios'
 import logo from '../../icon.png'
 
-
-
-
-
-
 function Maps({user}){
     let coord
     const [test,setTest]=useState({})
@@ -250,10 +245,7 @@ function Maps({user}){
                             <h3>{restaurant.name}</h3>
                             <h5>{restaurant.vicinity}</h5>
                             <h5>{restaurant.rating? `Rating: ${restaurant.rating}/5`:'No Rating'}</h5>
-                            <Button onClick={openInGoogleMaps} variant="warning" style={{'width':'100%'}}>Open in GoogleMaps</Button>
-
-                            {user?
-                                <>
+                            {user? <>
                                     <h5>Visits: {visits}</h5>
                                     <div>
                                         <Row className='mt-2 text-center' >
@@ -270,14 +262,14 @@ function Maps({user}){
                                                 <Button variant="warning" onClick={()=>addToVisitCounter('add')} style={{'width':'100%'}}>Log Visit</Button>
                                             </Col>
                                         </Row>
-                                    <Row className='mt-2  text-center' >
+                                        <Row className='mt-2  text-center' >
                                         <Col>
                                             <Button variant="warning" onClick={()=>addToVisitCounter('minus')} style={{'width':'100%'}}>Remove Visit</Button>
                                         </Col>
                                     </Row>
                                     </div>
-                                </>
-                            :<></>}
+                                </> :<></>}
+                            <Button onClick={openInGoogleMaps} variant="warning" style={{'width':'100%'}}>Open in GoogleMaps</Button>
                         </Col>
                     </Row>
                     <Row className='m-3'>
