@@ -75,8 +75,9 @@ def user_data(request):
     user_stats_serialize = RestaurantStatsSerializer(user_stats_filter,many=True)
     user_stats = user_stats_serialize.data
 
-    print(user_profile)
-    print(user_stats)
+    # print(user_profile)
+    # print(user_stats)
+    print('user data sent')
 
     return Response({'user_profile':user_profile,'user_stats':user_stats})
 

@@ -1,22 +1,18 @@
-from django.http.response import JsonResponse
-from accounts.serializers import UserDataSerializer
-from accounts.views import user_data
-from django.shortcuts import render
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated
-from accounts.models import User
 from restaurants.models import *
 from restaurants.serializers import *
 import ast
 from rest_framework import status
-
-
-
 import os
 import random
-import googlemaps
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 # Create your views here.
 
 @api_view(['GET','POST'])
@@ -38,7 +34,7 @@ def restaurants_index(request):
             maxprice=2
             
 
-        googleMapsApiKey= 'AIzaSyAbE5oW_KVEDundMDGXDUe94Fz5xwqqf0s'
+        googleMapsApiKey= os.getenv('process.env.REACT_APP_GOOGLE_MAPS_API_KEY')
         URL = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={coordinates['lat']},{coordinates['lng']}&radius={radius}&maxprice={maxprice}&type={type}&keyword={keyword}&key={googleMapsApiKey}"
         print(URL)
         results = requests.get(URL).json()['results']

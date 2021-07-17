@@ -7,7 +7,9 @@ import MapStyles from "./MapStyles";
 import "@reach/combobox/styles.css";
 import axios from "axios";
 import Axios from '../../Axios'
-import logo from './icon.png'
+import logo from '../../icon.png'
+
+
 
 
 
@@ -48,9 +50,9 @@ function Maps({user}){
         mapRef.current.setZoom(15);
     }, []);
 
-    navigator.geolocation.getCurrentPosition((position)=>{
-        coord={'lat':position.coords.latitude,'lng':position.coords.longitude}
-    },()=>null)
+    // navigator.geolocation.getCurrentPosition((position)=>{
+    //     coord={'lat':position.coords.latitude,'lng':position.coords.longitude}
+    // },()=>null)
 
     if (loadError) return 'Error Loading Maps'
     if (!isLoaded) return 'Loading Maps'
@@ -155,6 +157,9 @@ function Maps({user}){
         }catch(e){console.log(e)}
     }
 
+    function openInGoogleMaps() {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${restaurant.geometry.location.lat}%2C${restaurant.geometry.location.lng}&query_place_id=${restaurant.place_id}`, "_blank");
+    }
 
 
 
@@ -179,7 +184,7 @@ function Maps({user}){
                         value={value}
                         onChange={(e)=>{setValue(e.target.value)}}
                         disabled={!ready}
-                        placeholder='Leave blank to use current location'
+                        placeholder='Enter current location'
                         className='mainPageInput'
                     />
                     <ComboboxPopover>
@@ -196,7 +201,9 @@ function Maps({user}){
             <Row className='justify-content-center'>
                 <Col className='col-10 col-md-8'>
                     <Row className='justify-content-center'>
-                        <img src={logo} width='30' height='35' className="mt-2 mr-1"/>
+                        <img
+                        src={logo}
+                        width='30' height='35' className="mt-2 mr-1"/>
                         <h1>What2Eat?</h1>
                     </Row>
                     <Row className='justify-content-center text-center'><h5>Too busy to think about lunch? Is indecisive your middle name? Let W2E decide for you lah.</h5></Row>
@@ -243,6 +250,8 @@ function Maps({user}){
                             <h3>{restaurant.name}</h3>
                             <h5>{restaurant.vicinity}</h5>
                             <h5>{restaurant.rating? `Rating: ${restaurant.rating}/5`:'No Rating'}</h5>
+                            <Button onClick={openInGoogleMaps} variant="warning" style={{'width':'100%'}}>Open in GoogleMaps</Button>
+
                             {user?
                                 <>
                                     <h5>Visits: {visits}</h5>

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="45effb6b-0c4f-4f6b-b2b9-9149258f8697" name="Default Changelist" comment="">
+    <list default="true" id="3ffe04f2-7c20-4381-b953-e9ddd1292f35" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../accounts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../accounts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.af359578.chunk.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/static/js/main.af359578.chunk.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Maps/Maps.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Maps/Maps.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Maps/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../restaurants/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../restaurants/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,9 +19,8 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="RESET_MODE" value="HARD" />
   </component>
-  <component name="ProjectId" id="1vKPWoOktAJsf4U6iLcznkoGM95" />
+  <component name="ProjectId" id="1vQazsHtCsAJqWx6o7LxJtAAHxF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,17 +30,24 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\cwlro\Desktop\SEI29\project_4\client\src" />
+      <recent name="C:\Users\cwlro\Desktop\SEI29\project_4\client\public" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="45effb6b-0c4f-4f6b-b2b9-9149258f8697" name="Default Changelist" comment="" />
-      <created>1626307841623</created>
+      <changelist id="3ffe04f2-7c20-4381-b953-e9ddd1292f35" name="Default Changelist" comment="" />
+      <created>1626497032447</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1626307841623</updated>
-      <workItem from="1626307842892" duration="16657000" />
+      <updated>1626497032447</updated>
+      <workItem from="1626497033995" duration="4257000" />
     </task>
     <servers />
   </component>
@@ -52,6 +64,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
