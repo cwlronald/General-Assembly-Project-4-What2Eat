@@ -269,7 +269,12 @@ function Maps({user}){
                                     </Row>
                                     </div>
                                 </> :<></>}
-                            <Button onClick={openInGoogleMaps} variant="warning" style={{'width':'100%'}}>Open in GoogleMaps</Button>
+                            <Row className='mt-2  text-center'>
+                                <Col>
+                                    <Button onClick={openInGoogleMaps} variant="warning" style={{'width':'100%'}}>Open in GoogleMaps</Button>
+                                </Col>
+                            </Row>
+
                         </Col>
                     </Row>
                     <Row className='m-3'>
